@@ -63,6 +63,8 @@ components:
         token:
           type: string
           example: ey9ua9jdjfajsdojfa.faosdhfoahsdhfohaso.e9owhfohaohsdofhjaoshdjflha
+      required:
+        - token
 
     SignIn:
       type: object
@@ -76,4 +78,8 @@ components:
         email:
           type: string
           example: joe@example.com
+      required:
+        - email
+        - password
+        - username
         
