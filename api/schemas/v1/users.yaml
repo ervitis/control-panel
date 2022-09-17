@@ -1,0 +1,97 @@
+openapi: 3.0.3
+info:
+  title: Users
+  description: Users endpoint
+  version: 0.1.0
+
+servers:
+  - url: http://localhost:8080/v1/
+
+paths:
+  /users:
+    get:
+      operationId: GetUsers
+      tags:
+        - users
+      summary: Returns all users
+      responses:
+        '200':
+          description: Get list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /user:
+    post:
+      operationId: CreateUser
+      tags:
+        - users
+      summary: Create new user
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /user/{id}:
+    parameters:
+      - name: id
+        description: ID of the user
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: GetUser
+      tags:
+        - users
+      summary: Get an user by its id
+      responses:
+        '200':
+          description: Get user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      operationId: UpdateUser
+      tags:
+        - users
+      summary: Update an user by its id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '204':
+          description: User updated
+    delete:
+      operationId: DeleteUser
+      tags:
+        - users
+      summary: Delete user
+      responses:
+        '204':
+          description: User deleted
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'John'
+      required:
+        - id
+        - name

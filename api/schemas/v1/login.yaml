@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Login
+  description: Login services
+  version: 0.1.0
+
+servers:
+  - url: 'http://localhost:8080/v1/'
+
+paths:
+
+  /login:
+    post:
+      summary: Login to page
+      operationId: Login
+      tags:
+        - login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: Login to the page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+
+  /signin:
+    post:
+      summary: Sign in
+      operationId: SignIn
+      tags:
+        - signin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignIn'
+      responses:
+        '204':
+          description: Sign in success
+        '400':
+          description: Bad body request
+
+components:
+  schemas:
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+          example: johndoe190
+        password:
+          type: string
+          example: abAD87_87
+
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: ey9ua9jdjfajsdojfa.faosdhfoahsdhfohaso.e9owhfohaohsdofhjaoshdjflha
+
+    SignIn:
+      type: object
+      properties:
+        username:
+          type: string
+          example: joe@example.com
+        password:
+          type: string
+          example: A8j_9mNn
+        email:
+          type: string
+          example: joe@example.com
+        
