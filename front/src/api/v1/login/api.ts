@@ -51,19 +51,19 @@ export interface SignIn {
      * @type {string}
      * @memberof SignIn
      */
-    username?: string;
+    username: string;
     /**
      * 
      * @type {string}
      * @memberof SignIn
      */
-    password?: string;
+    password: string;
     /**
      * 
      * @type {string}
      * @memberof SignIn
      */
-    email?: string;
+    email: string;
 }
 /**
  * 
@@ -76,7 +76,7 @@ export interface Token {
      * @type {string}
      * @memberof Token
      */
-    token?: string;
+    token: string;
 }
 
 /**
