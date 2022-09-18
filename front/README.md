@@ -18,6 +18,20 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## CSS wrapping rules
 
+When creating new components use this CSS wrapping rules:
+
+```html
+<body>
+    <ComponentWrapper>
+        <TitleWrapper>
+            ...
+        </TitleWrapper>
+        <ContentWrapper>
+            ...
+        </ContentWrapper>
+    </ComponentWrapper>
+</body>
+```
 
 ## Atomic design vs Design System Components
 
