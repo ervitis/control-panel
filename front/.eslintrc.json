@@ -1,7 +1,9 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "amd": true,
+        "node": true
     },
     "extends": [
         "eslint:recommended",
@@ -38,7 +40,8 @@
             "error",
             "never"
         ],
-        "object-curly-spacing": ["error", "always"]
+        "object-curly-spacing": ["error", "always"],
+        "@typescript-eslint/no-var-requires": 0
     },
     "settings": {
         "import/resolver": {
