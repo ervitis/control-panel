@@ -19,10 +19,7 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@apiv1/*": ["./api/v1/*"],
-      "@pages/*": ["./src/pages/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
