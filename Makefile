@@ -21,3 +21,6 @@ front-api-generate-v1: ## Generate API V1 for frontend
 	done ;\
 	rm -rf ./api/schemas/apigen && \
 	rm -rf ./api/schemas/hsperfdata_root
+
+front-dev-start: ## Start server for dev environment
+	(cd ./front && yarn start)

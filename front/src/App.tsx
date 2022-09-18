@@ -1,5 +1,7 @@
 import React from 'react'
-import {Link, HashRouter as Router, Routes, Route} from 'react-router-dom'
+import { Link, HashRouter as Router, Routes, Route } from 'react-router-dom'
+
+import * as About from '@pages/About'
 
 const App = () => {
     return (
@@ -13,7 +15,7 @@ const App = () => {
                 </nav>
                 <Routes>
                     <Route path="/" element={<App />}/>
-                    <Route path="/about" element={}/>
+                    <Route path="/about" element={<About.Component />}/>
                 </Routes>
             </div>
         </Router>
