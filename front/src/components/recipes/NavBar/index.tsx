@@ -1,7 +1,6 @@
 import * as LoginForm from '@/components/snowflakes/Login'
-
 import { useLogin } from '@/components/snowflakes/Login/useLogin'
-import React from 'react'
+import * as React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 

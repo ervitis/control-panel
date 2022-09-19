@@ -11,7 +11,14 @@ export const Component = (props: Props) => {
         <LoginWrapper>
             <Title>Log In</Title>
             <Content>
-                Login form
+                <FormContentWrap>
+                    <FormLabel>Username:
+                        <InputText type="text" placeholder="email or username"/>
+                    </FormLabel>
+                    <FormLabel>Password:
+                        <InputText type="password" placeholder="password"/>
+                    </FormLabel>
+                </FormContentWrap>
                 <ButtonsAlignWrap>
                     <button onClick={props.onClickCloseLoginWindow}>Close</button>
                     <button onClick={props.onClickSubmitLogin}>Submit</button>
@@ -33,7 +40,7 @@ const LoginWrapper = styled.div`
   box-shadow: darkgray;
   border-radius: 10px;
   width: 250px;
-  background-color: beige;
+  background-color: cadetblue;
 `
 
 const Title = styled.div`
@@ -51,4 +58,25 @@ const ButtonsAlignWrap = styled.div`
   align-items: center;
   gap: 10px;
   padding: 4px;
+`
+
+const FormContentWrap = styled.div`
+  justify-content: space-between;
+`
+
+const FormLabel = styled.label`
+  padding: 6px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`
+
+const InputText = styled.input`
+  box-sizing: border-box;
+  color: blue;
+  background-color: papayawhip;
+  border-radius: 2px;
+  border: none;
+  width: 120px;
+  margin-left: 10px;
 `
