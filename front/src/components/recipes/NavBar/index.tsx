@@ -1,19 +1,32 @@
+import * as LoginForm from '@/components/snowflakes/Login'
+
+import { useLogin } from '@/components/snowflakes/Login/useLogin'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Component = () => {
+    const loginForm = useLogin()
+
     return (
-        <ComponentWrapper>
-            <LinksWrapper>
-                <LinkWrapper to="/">Home</LinkWrapper>
-                <LinkWrapper to="/about">About</LinkWrapper>
-            </LinksWrapper>
-            <ControlAccessButtonsWrapper>
-                <LoginButtonWrapper type="button" onClick={() => {alert('hello')}}>Login</LoginButtonWrapper>
-                <SignInButtonWrapper type="button" onClick={() => alert('bye')}>Sign In</SignInButtonWrapper>
-            </ControlAccessButtonsWrapper>
-        </ComponentWrapper>
+        <>
+            <ComponentWrapper>
+                <LinksWrapper>
+                    <LinkWrapper to="/">Home</LinkWrapper>
+                    <LinkWrapper to="/about">About</LinkWrapper>
+                </LinksWrapper>
+                <ControlAccessButtonsWrapper>
+                    <LoginButtonWrapper type="button" onClick={loginForm.onClickLogin}>Login</LoginButtonWrapper>
+                    <SignInButtonWrapper type="button" onClick={() => alert('bye')}>Sign In</SignInButtonWrapper>
+                </ControlAccessButtonsWrapper>
+            </ComponentWrapper>
+            {loginForm.isLoginWindowOpen && (
+                <LoginForm.Component
+                    onClickCloseLoginWindow={loginForm.onClickCloseLoginWindow}
+                    onClickSubmitLogin={loginForm.onClickSubmitLogin}
+                />)}
+        </>
+
     )
 }
 
