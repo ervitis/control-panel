@@ -1,11 +1,14 @@
 import * as LoginForm from '@/components/snowflakes/Login'
 import { useLogin } from '@/components/snowflakes/Login/useLogin'
+import * as SignInForm from '@/components/snowflakes/SignIn'
+import { useSignIn } from '@/components/snowflakes/SignIn/useSignIn'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Component = () => {
     const loginForm = useLogin()
+    const signinForm = useSignIn()
 
     return (
         <>
@@ -16,13 +19,18 @@ export const Component = () => {
                 </LinksWrapper>
                 <ControlAccessButtonsWrapper>
                     <LoginButtonWrapper type="button" onClick={loginForm.onClickLogin}>Login</LoginButtonWrapper>
-                    <SignInButtonWrapper type="button" onClick={() => alert('bye')}>Sign In</SignInButtonWrapper>
+                    <SignInButtonWrapper type="button" onClick={signinForm.onClickSignIn}>Sign In</SignInButtonWrapper>
                 </ControlAccessButtonsWrapper>
             </ComponentWrapper>
             {loginForm.isLoginWindowOpen && (
                 <LoginForm.Component
                     onClickCloseLoginWindow={loginForm.onClickCloseLoginWindow}
                     onClickSubmitLogin={loginForm.onClickSubmitLogin}
+                />)}
+            {signinForm.isSiginWindowOpen && (
+                <SignInForm.Component
+                    onClickCloseSignInWindow={signinForm.onClickCloseSiginWindow}
+                    onClickSubmitSignIn={signinForm.onClickSubmitSignIn}
                 />)}
         </>
 
