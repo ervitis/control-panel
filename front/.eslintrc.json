@@ -41,7 +41,11 @@
             "never"
         ],
         "object-curly-spacing": ["error", "always"],
-        "@typescript-eslint/no-var-requires": 0
+        "@typescript-eslint/no-var-requires": 0,
+        "max-depth": ["error", 3],
+        "max-len": ["error", {
+            "code": 130
+        }]
     },
     "settings": {
         "import/resolver": {
