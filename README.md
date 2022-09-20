@@ -12,6 +12,8 @@
 ### DOING
 
 - Sign in frontend
+  - Logic for sign in, in frontend:
+    - Validate fields in frontend: email format, username length and password strength
 - Log in frontend
 
 
