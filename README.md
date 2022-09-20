@@ -9,13 +9,16 @@
 
 ### DONE
 
+### DOING
+
+- Sign in frontend
+- Log in frontend
 
 
 ### TODO
 
-- Sign in frontend
+- Sign in and log in one component with tabs
 - Sign in backend
-- Log in frontend
 - Log in backend
 - Set credentials manager using jwt with refresh token
 - User management CRUD backend
