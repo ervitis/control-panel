@@ -11,8 +11,6 @@ type Result = {
 export const useLogin = (): Result => {
     const [isOpen, setOpen] = React.useState<boolean>(false)
 
-    console.log(isOpen)
-
     const onClickLogin = React.useCallback(() => {
         setOpen(true)
     }, [])

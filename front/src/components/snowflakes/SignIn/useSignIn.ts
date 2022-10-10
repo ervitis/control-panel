@@ -1,7 +1,11 @@
+import * as Service from '@/services'
 import * as React from 'react'
 
 type Result = {
     isSiginWindowOpen: boolean
+
+    isError: boolean
+    isLoading: boolean
 
     onClickSignIn: () => void
     onClickSubmitSignIn: () => void
@@ -9,15 +13,21 @@ type Result = {
 }
 
 export const useSignIn = (): Result => {
+    const { signIn, isLoading: signInIsLoading, isError: signInIsError } = Service.useSubmitSignIn()
+
     const [isOpen, setOpen] = React.useState<boolean>(false)
 
     const onClickSignIn = React.useCallback(() => {
         setOpen(true)
     }, [])
 
-    const onClickSubmitSignIn = React.useCallback(() => {
-        return
-    }, [])
+    const onClickSubmitSignIn = React.useCallback(async () => {
+        try {
+            const signedInUser = await signIn({ username: '', password: '', email: '' })
+        } catch (err) {
+            console.error(err)
+        }
+    }, [signIn])
 
     const onClickCloseSiginWindow = React.useCallback(() => {
         setOpen(false)
@@ -25,6 +35,9 @@ export const useSignIn = (): Result => {
 
     return {
         isSiginWindowOpen: isOpen,
+
+        isError: signInIsError,
+        isLoading: signInIsLoading,
 
         onClickSignIn,
         onClickSubmitSignIn,

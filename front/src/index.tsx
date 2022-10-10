@@ -4,15 +4,21 @@ import ReactDOM from 'react-dom/client'
 import { HashRouter as Router } from 'react-router-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 )
+
+const queryClient = new QueryClient()
+
 root.render(
     <React.StrictMode>
-        <Router>
-            <App />
-        </Router>
+        <QueryClientProvider client={queryClient} contextSharing={true}>
+            <Router>
+                <App />
+            </Router>
+        </QueryClientProvider>
     </React.StrictMode>
 )
 

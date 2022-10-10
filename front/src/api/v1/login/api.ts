@@ -14,7 +14,7 @@
 
 
 import { Configuration } from './configuration';
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
@@ -32,13 +32,13 @@ export interface Login {
      * @type {string}
      * @memberof Login
      */
-    username?: string;
+    'username'?: string;
     /**
      * 
      * @type {string}
      * @memberof Login
      */
-    password?: string;
+    'password'?: string;
 }
 /**
  * 
@@ -51,19 +51,38 @@ export interface SignIn {
      * @type {string}
      * @memberof SignIn
      */
-    username: string;
+    'username': string;
     /**
      * 
      * @type {string}
      * @memberof SignIn
      */
-    password: string;
+    'password': string;
     /**
      * 
      * @type {string}
      * @memberof SignIn
      */
-    email: string;
+    'email': string;
+}
+/**
+ * 
+ * @export
+ * @interface SignedUser
+ */
+export interface SignedUser {
+    /**
+     * 
+     * @type {string}
+     * @memberof SignedUser
+     */
+    'username': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignedUser
+     */
+    'id': string;
 }
 /**
  * 
@@ -76,7 +95,7 @@ export interface Token {
      * @type {string}
      * @memberof Token
      */
-    token: string;
+    'token': string;
 }
 
 /**
@@ -92,7 +111,7 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        login: async (login?: Login, options: any = {}): Promise<RequestArgs> => {
+        login: async (login?: Login, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -109,7 +128,7 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(login, localVarRequestOptions, configuration)
@@ -136,7 +155,7 @@ export const LoginApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async login(login?: Login, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Token>> {
+        async login(login?: Login, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Token>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.login(login, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -178,7 +197,7 @@ export class LoginApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LoginApi
      */
-    public login(login?: Login, options?: any) {
+    public login(login?: Login, options?: AxiosRequestConfig) {
         return LoginApiFp(this.configuration).login(login, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -197,7 +216,7 @@ export const SigninApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signIn: async (signIn?: SignIn, options: any = {}): Promise<RequestArgs> => {
+        signIn: async (signIn?: SignIn, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/signin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -214,7 +233,7 @@ export const SigninApiAxiosParamCreator = function (configuration?: Configuratio
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(signIn, localVarRequestOptions, configuration)
@@ -241,7 +260,7 @@ export const SigninApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async signIn(signIn?: SignIn, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async signIn(signIn?: SignIn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignedUser>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.signIn(signIn, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -262,7 +281,7 @@ export const SigninApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signIn(signIn?: SignIn, options?: any): AxiosPromise<void> {
+        signIn(signIn?: SignIn, options?: any): AxiosPromise<SignedUser> {
             return localVarFp.signIn(signIn, options).then((request) => request(axios, basePath));
         },
     };
@@ -283,7 +302,7 @@ export class SigninApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SigninApi
      */
-    public signIn(signIn?: SignIn, options?: any) {
+    public signIn(signIn?: SignIn, options?: AxiosRequestConfig) {
         return SigninApiFp(this.configuration).signIn(signIn, options).then((request) => request(this.axios, this.basePath));
     }
 }

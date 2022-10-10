@@ -40,8 +40,12 @@ paths:
             schema:
               $ref: '#/components/schemas/SignIn'
       responses:
-        '204':
+        '200':
           description: Sign in success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignedUser'
         '400':
           description: Bad body request
 
@@ -82,4 +86,17 @@ components:
         - email
         - password
         - username
-        
+
+    SignedUser:
+      type: object
+      properties:
+        username:
+          type: string
+          example: joe@example.com
+        id:
+          type: string
+          example: 123456-72876-9348
+          format: uuid
+      required:
+        - username
+        - id
