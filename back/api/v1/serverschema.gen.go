@@ -4,6 +4,10 @@
 package apigen
 
 import (
+	"fmt"
+	"net/http"
+
+	"github.com/deepmap/oapi-codegen/pkg/runtime"
 	openapi_types "github.com/deepmap/oapi-codegen/pkg/types"
 	"github.com/labstack/echo/v4"
 )
@@ -32,17 +36,29 @@ type Token struct {
 	Token string `json:"token"`
 }
 
+// User defines model for User.
+type User struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+
 // LoginJSONBody defines parameters for Login.
 type LoginJSONBody = Login
 
 // SignInJSONBody defines parameters for SignIn.
 type SignInJSONBody = SignIn
 
+// UpdateUserJSONBody defines parameters for UpdateUser.
+type UpdateUserJSONBody = User
+
 // LoginJSONRequestBody defines body for Login for application/json ContentType.
 type LoginJSONRequestBody = LoginJSONBody
 
 // SignInJSONRequestBody defines body for SignIn for application/json ContentType.
 type SignInJSONRequestBody = SignInJSONBody
+
+// UpdateUserJSONRequestBody defines body for UpdateUser for application/json ContentType.
+type UpdateUserJSONRequestBody = UpdateUserJSONBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
@@ -52,6 +68,21 @@ type ServerInterface interface {
 	// Sign in
 	// (POST /signin)
 	SignIn(ctx echo.Context) error
+	// Create new user
+	// (POST /user)
+	CreateUser(ctx echo.Context) error
+	// Delete user
+	// (DELETE /user/{id})
+	DeleteUser(ctx echo.Context, id int) error
+	// Get an user by its id
+	// (GET /user/{id})
+	GetUser(ctx echo.Context, id int) error
+	// Update an user by its id
+	// (PUT /user/{id})
+	UpdateUser(ctx echo.Context, id int) error
+	// Returns all users
+	// (GET /users)
+	GetUsers(ctx echo.Context) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -74,6 +105,72 @@ func (w *ServerInterfaceWrapper) SignIn(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.SignIn(ctx)
+	return err
+}
+
+// CreateUser converts echo context to params.
+func (w *ServerInterfaceWrapper) CreateUser(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.CreateUser(ctx)
+	return err
+}
+
+// DeleteUser converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteUser(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "id" -------------
+	var id int
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "id", runtime.ParamLocationPath, ctx.Param("id"), &id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteUser(ctx, id)
+	return err
+}
+
+// GetUser converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUser(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "id" -------------
+	var id int
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "id", runtime.ParamLocationPath, ctx.Param("id"), &id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetUser(ctx, id)
+	return err
+}
+
+// UpdateUser converts echo context to params.
+func (w *ServerInterfaceWrapper) UpdateUser(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "id" -------------
+	var id int
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "id", runtime.ParamLocationPath, ctx.Param("id"), &id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.UpdateUser(ctx, id)
+	return err
+}
+
+// GetUsers converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUsers(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetUsers(ctx)
 	return err
 }
 
@@ -107,5 +204,10 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 
 	router.POST(baseURL+"/login", wrapper.Login)
 	router.POST(baseURL+"/signin", wrapper.SignIn)
+	router.POST(baseURL+"/user", wrapper.CreateUser)
+	router.DELETE(baseURL+"/user/:id", wrapper.DeleteUser)
+	router.GET(baseURL+"/user/:id", wrapper.GetUser)
+	router.PUT(baseURL+"/user/:id", wrapper.UpdateUser)
+	router.GET(baseURL+"/users", wrapper.GetUsers)
 
 }

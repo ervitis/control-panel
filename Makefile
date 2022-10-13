@@ -7,7 +7,7 @@ help: ## Show this help
 
 front-api-generate-v1: ## Generate API V1 for frontend
 	@echo "front-api-generate-v1";
-	declare -A APIV1FILES=( ["login"]="login.yaml" ["users"]="users.yaml" )\
+	declare -A APIV1FILES=( ["schema"]="schema.yaml" )\
 	; for apitype in "$${!APIV1FILES[@]}" ; do \
 		filename=$${APIV1FILES[$${apitype}]}; \
 		echo "Cleaning API v1 old files for "$${filename} && \
@@ -27,7 +27,7 @@ front-dev-start: ## Start server for dev environment
 
 back-api-generate-v1: ## Generate API V1 for backend
 	@echo "back-api-generate-v1";
-	declare -A APIV1FILES=( ["login"]="login.yaml" ["users"]="users.yaml" )\
+	declare -A APIV1FILES=( ["schema"]="schema.yaml" )\
 	; for apitype in "$${!APIV1FILES[@]}" ; do \
 		filename=$${APIV1FILES[$${apitype}]}; \
 		echo "Cleaning API v1 old files for "$${filename} && \
