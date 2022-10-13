@@ -18,9 +18,27 @@ front-api-generate-v1: ## Generate API V1 for frontend
 		echo "Moving file "$${filename}" from ./api/schemas/apigen/v1/"$${apitype}" to ./front/src/api/v1/"$${apitype} && \
 		mv -f ./api/schemas/apigen/v1/$${apitype} ./front/src/api/v1/$${apitype} && \
 		sleep 2; \
-	done ;\
+	done ; \
 	rm -rf ./api/schemas/apigen && \
 	rm -rf ./api/schemas/hsperfdata_root
 
 front-dev-start: ## Start server for dev environment
 	(cd ./front && yarn start)
+
+back-api-generate-v1: ## Generate API V1 for backend
+	@echo "back-api-generate-v1";
+	declare -A APIV1FILES=( ["login"]="login.yaml" ["users"]="users.yaml" )\
+	; for apitype in "$${!APIV1FILES[@]}" ; do \
+		filename=$${APIV1FILES[$${apitype}]}; \
+		echo "Cleaning API v1 old files for "$${filename} && \
+		rm -rf ./back/api/v1/$${apitype} && \
+		echo "Creating API v1 for "$${filename} && \
+		mkdir -p ./api/schemas/v1/apigen && \
+		bash runtime_container.sh run -v ./api/schemas/v1/:/tmp  docker.io/ervitis/oapi-codegen:v1.11.0 oapi-codegen --config /tmp/oapiconfig.yaml /tmp/$${filename} > ./api/schemas/v1/apigen/server$${apitype}.gen.go && \
+		mkdir -p ./back/api/v1 && \
+		echo "Moving file "$${filename}" from ./api/schemas/v1/apigen/server"$${apitype}".gen.go to ./back/api/v1/server"$${apitype}".gen.go" && \
+		mv -f ./api/schemas/v1/apigen/server$${apitype}.gen.go ./back/api/v1/server$${apitype}.gen.go && \
+		sleep 2; \
+	done ; \
+	rm -rf ./api/schemas/v1/apigen && \
+	rm -rf ./api/schemas/v1/hsperfdata_root

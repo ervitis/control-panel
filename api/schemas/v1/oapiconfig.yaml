@@ -1,0 +1,7 @@
+package: apigen
+output-options:
+  skip-prune: true
+generate:
+  echo-server: true
+  models: true
+  types: true
