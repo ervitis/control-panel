@@ -1,4 +1,4 @@
-import { LoginApiFactory, SigninApiFactory } from '@/api/v1/login'
+import { LoginApiFactory, SigninApiFactory } from '@/api/v1/schema'
 import axios, { AxiosError } from 'axios'
 
 type Options = {
@@ -7,11 +7,11 @@ type Options = {
 
 const createAxios = (opts?: Options) => {
     const instance = axios.create({
-        withCredentials: opts?.withCredentials || false
+        withCredentials: opts?.withCredentials || false,
     })
 
     instance.interceptors.response.use(
-        response => response,
+        (response) => response,
         (err: AxiosError) => {
             return Promise.reject(err.response)
         }
@@ -20,5 +20,9 @@ const createAxios = (opts?: Options) => {
     return instance
 }
 
-export const LoginApiInstance = LoginApiFactory(undefined, undefined, createAxios())
+export const LoginApiInstance = LoginApiFactory(
+    undefined,
+    undefined,
+    createAxios()
+)
 export const signInApi = SigninApiFactory(undefined, undefined, createAxios())
