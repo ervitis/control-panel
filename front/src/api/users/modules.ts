@@ -1,4 +1,4 @@
-import { LoginApiFactory, SigninApiFactory } from '@/api/v1'
+import { UsersApiFactory } from '@/api/v1'
 import axios, { AxiosError } from 'axios'
 
 type Options = {
@@ -20,9 +20,9 @@ const createAxios = (opts?: Options) => {
     return instance
 }
 
-export const LoginApiInstance = LoginApiFactory(
+export const UsersApiInstance = UsersApiFactory(
     undefined,
     undefined,
     createAxios()
 )
-export const signInApi = SigninApiFactory(undefined, undefined, createAxios())
+export const usersApi = UsersApiFactory(undefined, undefined, createAxios())

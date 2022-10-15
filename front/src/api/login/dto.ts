@@ -1,4 +1,4 @@
-import { SignIn } from '@/api/v1/schema'
+import { SignIn } from '@/api/v1/'
 import { User } from '@/domain'
 
 export const toSignInUserDto = (signIn: SignIn): User => {
