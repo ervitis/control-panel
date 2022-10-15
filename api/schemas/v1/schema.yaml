@@ -63,6 +63,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+    post:
+      operationId: FilterUsers
+      tags:
+        - users
+      summary: Search users using filters
+      requestBody:
+        description: Filter users
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserFilter'
+      responses:
+        '200':
+          description: Users filtered
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
   /user:
     post:
       operationId: CreateUser
@@ -181,6 +203,23 @@ components:
         name:
           type: string
           example: 'John'
+        birthday:
+          type: string
+          example: '2000-09-12'
       required:
         - id
         - name
+        - birthday
+
+    UserFilter:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'John'
+        birthday:
+          type: string
+          example: '2000-09-12'
+      required:
+        - name
+        - birthday

@@ -11,15 +11,16 @@ front-api-generate-v1: ## Generate API V1 for frontend
 	; for apitype in "$${!APIV1FILES[@]}" ; do \
 		filename=$${APIV1FILES[$${apitype}]}; \
 		echo "Cleaning API v1 old files for "$${filename} && \
-		rm -rf ./front/src/api/v1/$${apitype} && \
+		rm -rf ./front/src/api/v1/panel && \
+		mkdir -p ./api/schemas/v1/apigen && \
 		echo "Creating API v1 for "$${filename} && \
-		bash runtime_container.sh run -v ./api/schemas/:/tmp/ docker.io/openapitools/openapi-generator-cli:v6.2.0 generate -g typescript-axios -i /tmp/v1/$${filename} -o /tmp/apigen/v1/$${apitype} && \
+		bash runtime_container.sh run -v ./api/schemas/v1:/tmp/ docker.io/openapitools/openapi-generator-cli:v6.2.0 generate -g typescript-axios -i /tmp/$${filename} -o /tmp/apigen/$${apitype} && \
 		mkdir -p ./front/src/api/v1 && \
 		echo "Moving file "$${filename}" from ./api/schemas/apigen/v1/"$${apitype}" to ./front/src/api/v1/"$${apitype} && \
-		mv -f ./api/schemas/apigen/v1/$${apitype} ./front/src/api/v1/$${apitype} && \
+		mv -f ./api/schemas/v1/apigen/$${apitype} ./front/src/api/v1/panel && \
 		sleep 2; \
 	done ; \
-	rm -rf ./api/schemas/apigen && \
+	rm -rf ./api/schemas/v1/apigen && \
 	rm -rf ./api/schemas/hsperfdata_root
 
 front-dev-start: ## Start server for dev environment
