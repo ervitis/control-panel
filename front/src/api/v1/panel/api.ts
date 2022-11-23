@@ -43,6 +43,37 @@ export interface Login {
 /**
  * 
  * @export
+ * @interface ModelError
+ */
+export interface ModelError {
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelError
+     */
+    'code'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelError
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelError
+     */
+    'time'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelError
+     */
+    'traceId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface SignIn
  */
 export interface SignIn {
@@ -304,7 +335,7 @@ export const SigninApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async signIn(signIn?: SignIn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignedUser>> {
+        async signIn(signIn?: SignIn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.signIn(signIn, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -325,7 +356,7 @@ export const SigninApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signIn(signIn?: SignIn, options?: any): AxiosPromise<SignedUser> {
+        signIn(signIn?: SignIn, options?: any): AxiosPromise<void> {
             return localVarFp.signIn(signIn, options).then((request) => request(axios, basePath));
         },
     };

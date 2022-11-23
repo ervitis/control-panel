@@ -13,7 +13,11 @@ type Result = {
 }
 
 export const useSignIn = (): Result => {
-    const { signIn, isLoading: signInIsLoading, isError: signInIsError } = Service.useSubmitSignIn()
+    const {
+        signIn,
+        isLoading: signInIsLoading,
+        isError: signInIsError,
+    } = Service.useSubmitSignIn()
 
     const [isOpen, setOpen] = React.useState<boolean>(false)
 
@@ -23,7 +27,7 @@ export const useSignIn = (): Result => {
 
     const onClickSubmitSignIn = React.useCallback(async () => {
         try {
-            const signedInUser = await signIn({ username: '', password: '', email: '' })
+            await signIn({ username: '', password: '', email: '' })
         } catch (err) {
             console.error(err)
         }
@@ -41,6 +45,6 @@ export const useSignIn = (): Result => {
 
         onClickSignIn,
         onClickSubmitSignIn,
-        onClickCloseSiginWindow
+        onClickCloseSiginWindow,
     }
 }

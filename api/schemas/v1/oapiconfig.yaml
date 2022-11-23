@@ -5,3 +5,5 @@ generate:
   echo-server: true
   models: true
   types: true
+  server: true
+  embedded-spec: true

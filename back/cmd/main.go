@@ -2,10 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	apigen "github.com/ervitis/control-panel/api/v1"
 	"github.com/ervitis/control-panel/common/global/mock"
 	"github.com/ervitis/control-panel/internal/domain"
 	"github.com/ervitis/control-panel/internal/ports"
 	"github.com/ervitis/control-panel/internal/services/user"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"log"
 	"net/http"
 )
@@ -34,29 +37,65 @@ func init() {
 	mock.Users = user.LoadMockList()
 }
 
-func main() {
-	http.HandleFunc("/filter", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {
-			w.WriteHeader(http.StatusMethodNotAllowed)
-			return
+type Server struct{}
+
+func (s Server) Login(ctx echo.Context) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s Server) SignIn(ctx echo.Context) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s Server) CreateUser(ctx echo.Context) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s Server) DeleteUser(ctx echo.Context, id int) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s Server) GetUser(ctx echo.Context, id int) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s Server) UpdateUser(ctx echo.Context, id int) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s Server) GetUsers(ctx echo.Context) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (s Server) FilterUsers(ctx echo.Context) error {
+	var body requestBody
+	if err := json.NewDecoder(ctx.Request().Body).Decode(&body); err != nil {
+		log.Println(err)
+		if err := ctx.JSON(http.StatusBadRequest, nil); err != nil {
+			return err
 		}
-
-		var body requestBody
-		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-			log.Println(err)
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-
-		filters := domain.NewFilter(domain.WithBirthday(body.Birthday), domain.WithName(body.Name))
-
-		b, _ := json.Marshal(svc.Filter(r.Context(), filters))
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write(b)
-	})
-
-	if err := http.ListenAndServe(":8085", nil); err != nil {
-		log.Panicln(err)
 	}
 
+	filters := domain.NewFilter(domain.WithBirthday(body.Birthday), domain.WithName(body.Name))
+
+	users := svc.Filter(ctx.Request().Context(), filters)
+	return ctx.JSON(http.StatusOK, users)
+}
+
+func main() {
+	s := Server{}
+	r := echo.New()
+
+	r.Use(middleware.CORS())
+
+	apigen.RegisterHandlersWithBaseURL(r, s, "/v1")
+
+	r.Logger.Fatal(r.Start(":8080"))
 }

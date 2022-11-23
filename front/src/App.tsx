@@ -1,23 +1,8 @@
-import * as NavBar from '@/components/recipes/NavBar'
-
-import * as About from '@/pages/About'
-import * as Home from '@/pages/Home'
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import * as Route from '@/router'
 
 const App = () => {
-    return (
-        <>
-            <NavBar.Component />
-            <div>
-                <Routes>
-                    <Route path="/" element={<Home.Component />}/>
-                    <Route path="/about" element={<About.Component />}/>
-                </Routes>
-            </div>
-        </>
-
-    )
+    return <Route.Route />
 }
 
 export default App

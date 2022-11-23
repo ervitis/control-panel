@@ -5,7 +5,7 @@ import * as React from 'react'
 import { useMutation } from 'react-query'
 
 type Results = {
-    signIn: (args: Domain.User) => Promise<Domain.SignedUser>
+    signIn: (args: Domain.User) => Promise<void>
 
     isLoading: boolean
 
@@ -16,23 +16,21 @@ type UseSignIn = () => Results
 
 export const useSubmitSignIn: UseSignIn = () => {
     const mutation = useMutation((args: Domain.User) =>
-        signInApi.signIn(toSignInUserDto(args)))
+        signInApi.signIn(toSignInUserDto(args))
+    )
 
     const signIn = React.useCallback(
         async (args: Domain.User) => {
-            const response = await mutation.mutateAsync(args)
-            return {
-                username: response.data.username,
-                id: response.data.id
-            }
-        }
-        , [mutation])
+            await mutation.mutateAsync(args)
+        },
+        [mutation]
+    )
 
     return {
         signIn,
 
         isLoading: mutation.isLoading,
 
-        isError: mutation.isError
+        isError: mutation.isError,
     }
 }
