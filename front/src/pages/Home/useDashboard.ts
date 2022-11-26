@@ -41,10 +41,10 @@ export const useDashboard = (args: Args): Results => {
         ;(async () => {
             try {
                 const users = await filterUsers(args.filters)
-                console.log(users)
                 if (!users) {
                     return
                 }
+                setDashboardState((old) => ({ ...old, users: users }))
             } catch (err) {
                 console.error(err)
             }

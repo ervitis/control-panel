@@ -24,11 +24,11 @@ export const Component = (props: Props) => {
     return (
         <>
             <NavBar.Component />
-            Home Page
+            <h1>Home page</h1>
             {dashboardState.users.map((user) => (
-                <p key={user.id}>
+                <span key={user.id}>
                     {user.name} - {user.birthday}
-                </p>
+                </span>
             ))}
         </>
     )
