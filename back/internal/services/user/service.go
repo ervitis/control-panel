@@ -56,6 +56,10 @@ func (s service) Filter(_ context.Context, criteria domain.Filter) []domain.User
 		}, mock.Users...)
 	}(criteria)
 
+	if len(f1) == 0 && len(f2) == 0 {
+		return mock.Users
+	}
+
 	if len(f1) > 0 && len(f2) > 0 {
 		return fpgo.Concat(f1, f2)
 	}
