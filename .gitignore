@@ -83,3 +83,5 @@ fabric.properties
 
 hsperfdata_root
 gen
+main
+tmp

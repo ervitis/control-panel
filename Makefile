@@ -49,4 +49,5 @@ back-api-generate-v1: ## Generate API V1 for backend
 	rm -rf ./api/schemas/v1/hsperfdata_root
 
 back-dev-start: ## Start server with live reloading
-	bash runtime_container.sh run --rm -w "/go/src/github.com/ervitis/control-panel" -v ./back:/go/src/github.com/ervitis/control-panel -p 8080:8080 docker.io/cosmtrek/air:v$(AIR_VERSION)
+	bash runtime_container.sh build -t control-panel:latest ./back && \
+	bash runtime_container.sh run --rm -v ./back:/go/src/github.com/ervitis/control-panel -p 8080:8080 control-panel:latest
