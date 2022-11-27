@@ -28,7 +28,7 @@ front-api-generate-v1: ## Generate API V1 for frontend
 	rm -rf ./api/schemas/hsperfdata_root
 
 front-dev-start: ## Start server for dev environment
-	(cd ./front && yarn start)
+	(cd ./front && yarn dev)
 
 back-api-generate-v1: ## Generate API V1 for backend
 	@echo "back-api-generate-v1";

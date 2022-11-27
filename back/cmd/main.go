@@ -18,7 +18,7 @@ type requestBody struct {
 	Birthday string `json:"birthday"`
 }
 
-type responseBody struct {
+type usersResponse struct {
 	ID       uint64 `json:"id"`
 	Name     string `json:"name"`
 	Birthday string `json:"birthday"`
@@ -86,7 +86,19 @@ func (s Server) FilterUsers(ctx echo.Context) error {
 	filters := domain.NewFilter(domain.WithBirthday(body.Birthday), domain.WithName(body.Name))
 
 	users := svc.Filter(ctx.Request().Context(), filters)
-	return ctx.JSON(http.StatusOK, users)
+	return ctx.JSON(http.StatusOK, toUsersResponse(users))
+}
+
+func toUsersResponse(users []domain.User) []usersResponse {
+	r := make([]usersResponse, len(users), len(users))
+	for i, v := range users {
+		r[i] = usersResponse{
+			ID:       uint64(v.ID),
+			Name:     v.Name,
+			Birthday: v.Birthday,
+		}
+	}
+	return r
 }
 
 func main() {
